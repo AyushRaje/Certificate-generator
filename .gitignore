@@ -2,3 +2,4 @@ venv/
 *.pptx
 *.pdf
 *.png
+*/__pycache__/

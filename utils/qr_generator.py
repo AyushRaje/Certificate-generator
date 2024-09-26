@@ -14,7 +14,6 @@ class QrGenerator:
         qr.add_data(data) 
         qr.make(fit=True)
         img = qr.make_image(fill="black", back_color="white")
-        img.save(qr_identifier +".png")
         return img
     
 if __name__ == '__main__':
