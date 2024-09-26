@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Card Selection and CSV Upload</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Select an Image Card and Upload a CSV</h1>
+        <div class="image-cards">
+            <div class="card" id="card1">
+                <img src="{% static 'sample_card.png' %}" alt="Image 1">
+                <p>Template 1</p>
+            </div>
+            <div class="card" id="card2">
+                <img src="{% static 'sample_card.png' %}" alt="Image 2">
+                <p>Template 2</p>
+            </div>
+            <div class="card" id="card3">
+                <img src="{% static 'sample_card.png' %}" alt="Image 3">
+                <p>Template 3</p>
+            </div>
+        </div>
+
+        <!-- File input for CSV file, hidden initially -->
+        <input type="file" id="csvInput" accept=".csv" style="display: none;" onchange="handleFileUpload()">
+
+        <button id="uploadBtn" disabled>Upload CSV</button>
+        <button id="clearBtn" disabled>Clear Selection</button>
+        
+        <p id="fileInfo"></p> <!-- Display file info -->
+    </div>
+
+    <script src="{% static 'script.js' %}"></script>
+</body>
+</html>
