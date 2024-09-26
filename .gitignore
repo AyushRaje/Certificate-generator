@@ -1,1 +1,4 @@
 venv/
+*.pptx
+*.pdf
+*.png
