@@ -11,29 +11,37 @@
 <body>
     <div class="container">
         <h1>Select an Image Card and Upload a CSV</h1>
-        <div class="image-cards">
-            <div class="card" id="card1">
-                <img src="{% static 'sample_card.png' %}" alt="Image 1">
-                <p>Template 1</p>
+        <form id="uploadForm" method="post" enctype="multipart/form-data" action="{% url 'upload_file' %}">
+            {% csrf_token %}
+            <div class="image-cards">
+                <div class="card" id="card1">
+                    <img src="{% static 'sample_card.png' %}" alt="Image 1" data-image="image1">
+                    <p>Image 1</p>
+                </div>
+                <div class="card" id="card2">
+                    <img src="{% static 'sample_card.png' %}" alt="Image 2" data-image="image2">
+                    <p>Image 2</p>
+                </div>
+                <div class="card" id="card3">
+                    <img src="{% static 'sample_card.png' %}" alt="Image 3" data-image="image3">
+                    <p>Image 3</p>
+                </div>
             </div>
-            <div class="card" id="card2">
-                <img src="{% static 'sample_card.png' %}" alt="Image 2">
-                <p>Template 2</p>
-            </div>
-            <div class="card" id="card3">
-                <img src="{% static 'sample_card.png' %}" alt="Image 3">
-                <p>Template 3</p>
-            </div>
-        </div>
-
-        <!-- File input for CSV file, hidden initially -->
-        <input type="file" id="csvInput" accept=".csv" style="display: none;" onchange="handleFileUpload()">
-
-        <button id="uploadBtn" disabled>Upload CSV</button>
-        <button id="clearBtn" disabled>Clear Selection</button>
         
-        <p id="fileInfo"></p> <!-- Display file info -->
-    </div>
+            <!-- Hidden input for storing the selected image data -->
+            <input type="hidden" id="selectedImageInput" name="selected_image">
+        
+            <!-- File input for CSV file, hidden initially -->
+            <input type="file" id="csvInput" name="csv_file" accept=".csv" style="display: none;" onchange="handleFileUpload()">
+        
+            <button id="uploadBtn" disabled  >Upload CSV</button>
+            <button id="clearBtn" disabled >Clear Selection</button>
+            <p id="fileInfo"></p> <!-- Display file info -->
+        
+            <!-- Generate button will be displayed after successful upload -->
+            <button type="submit">Generate</button>
+        </form>
+        
 
     <script src="{% static 'script.js' %}"></script>
 </body>
