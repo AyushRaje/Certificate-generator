@@ -2,7 +2,7 @@ import qrcode
 
 class QrGenerator:
 
-    def generate_qr(data, qr_identifier):
+    def generate_qr(data):
 
         qr = qrcode.QRCode(
         version=1, 
@@ -17,4 +17,4 @@ class QrGenerator:
         return img
     
 if __name__ == '__main__':
-    QrGenerator.generate_qr("https://www.google.com","test_qr")    
+    QrGenerator.generate_qr("https://www.google.com")    
