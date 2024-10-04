@@ -11,7 +11,6 @@ COURSE_IDS=(
 )
 
 
-
 class CertificateRequest(models.Model):
 
     id = models.AutoField(primary_key=True, auto_created=True, null=False)
@@ -22,9 +21,13 @@ class CertificateRequest(models.Model):
 
     status = models.CharField(max_length=100, choices=STATUS_CHOICES)
 
+    report_sent = models.BooleanField(default=False)
+
 class Certificate(models.Model):
 
     id = models.AutoField(primary_key=True,auto_created=True,null=False)
+
+    roll_no = models.CharField(max_length=100, null=True,blank=True)
 
     candidate_name = models.CharField(max_length=200, blank=True, null=True)
 

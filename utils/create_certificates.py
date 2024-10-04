@@ -36,10 +36,11 @@ def run_script(data, template_data):
         course_id = student['COURSE_ID']
         center = student['CENTER']
         scheme = student['SCHEME']
+        roll_no = student['ROLL_NO']
 
         
 
-        unique_identifier =  student['COURSE_ID'] + name
+        unique_identifier =  student['COURSE_ID'] + roll_no
 
         qr_field = config('QR_BASE_URL') + unique_identifier
 
@@ -92,7 +93,8 @@ def run_script(data, template_data):
                                                      course_name=course,
                                                      course_id=course_id,
                                                      is_created=True,
-                                                     credentials = qr_field)
+                                                     credentials = qr_field,
+                                                     roll_no=roll_no)
             else:
                 certificate_saved = save_certificate(candidate_name=name,
                                                      certificate_id=unique_identifier,
@@ -100,12 +102,16 @@ def run_script(data, template_data):
                                                      course_name=course,
                                                      course_id=course_id,
                                                      is_created=False,
-                                                     credentials = None)
+                                                     credentials = None,
+                                                     roll_no=roll_no)
                 
                 failed_certificate = save_failed_certificate(certificate_request= certificate_request,
                                                         certificate=certificate_saved)
                 
             # Clean up the temporary file
+                
             if os.path.exists(temp_ppt.name):
                 os.remove(temp_ppt.name)
+    certificate_request.status = "COMPLETED"
+    certificate_request.save()            
 

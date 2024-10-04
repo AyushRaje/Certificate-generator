@@ -3,6 +3,9 @@ import shutil
 import tempfile
 import os
 from pptxtopdf import convert
+import pandas as pd
+from datetime import datetime
+
 
 def ppt_to_pdf_convertor(input_file, output_path, output_filename):
     # Create a temporary directory for copying the input file
@@ -26,3 +29,13 @@ def ppt_to_pdf_convertor(input_file, output_path, output_filename):
         finally:
             # Uninitialize COM
             pythoncom.CoUninitialize()
+
+def data_to_excel_report_convertor(certificate_data,request_email):
+    df = pd.DataFrame(certificate_data)
+    df = df[['roll_no','candidate_name','course_name','course_id','certificate_id','credentials']]
+    
+    filename = r"demo_outputs\\Certificates-"+str(datetime.now().strftime("%d_%m_%Y_%I-%M%p"))+".xlsx" 
+    df.to_excel(filename, index=True, index_label='sr_no')
+
+
+    
