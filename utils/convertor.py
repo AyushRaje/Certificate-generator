@@ -31,11 +31,17 @@ def ppt_to_pdf_convertor(input_file, output_path, output_filename):
             pythoncom.CoUninitialize()
 
 def data_to_excel_report_convertor(certificate_data,request_email):
-    df = pd.DataFrame(certificate_data)
-    df = df[['roll_no','candidate_name','course_name','course_id','certificate_id','credentials']]
-    
-    filename = r"demo_outputs\\Certificates-"+str(datetime.now().strftime("%d_%m_%Y_%I-%M%p"))+".xlsx" 
-    df.to_excel(filename, index=True, index_label='sr_no')
+    try:
+        df = pd.DataFrame(certificate_data)
+        df = df[['roll_no','candidate_name','course_name','course_id','certificate_id','credentials']]
+        
+        filename = r"demo_outputs\\Certificates-"+str(datetime.now().strftime("%d_%m_%Y_%I-%M%p"))+".xlsx" 
+        df.to_excel(filename, index=True, index_label='sr_no')
+
+        return filename, df.size
+    except Exception as e:
+        print("Exception in data_to_excel_convertor:", str(e))
+        return ""
 
 
     

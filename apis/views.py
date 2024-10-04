@@ -8,6 +8,7 @@ import json
 from utils.create_certificates import run_script
 import subprocess
 from threading import Thread
+import ast
 # Create your views here.
 
 def index(request):
@@ -45,9 +46,11 @@ def handle_upload(request):
     
     thread = Thread(target=run_script, args=(df,dictionary))
     thread.start()
-
+    email = ast.literal_eval(dictionary).get('email')
     data = {
-        'message': 'The certificate generation has started, you will receive the reports and certificates in the email'
+        'email': email,
+        'message': 'The certificate generation has started, you will receive the reports and certificates in the email',
+        'certificates_requested':df.size
     }
     # print(df)
 
