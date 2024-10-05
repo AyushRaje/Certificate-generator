@@ -76,7 +76,7 @@ def run_script(data, template_data):
                 prs.save(temp_ppt.name)
 
                 # Convert the saved PowerPoint to a PDF
-                ppt_to_pdf_convertor(temp_ppt.name, "demo_outputs/",unique_identifier)
+                drive_link = ppt_to_pdf_convertor(temp_ppt.name, "demo_outputs/")
 
                 creation_status = True
 
@@ -94,7 +94,8 @@ def run_script(data, template_data):
                                                      course_id=course_id,
                                                      is_created=True,
                                                      credentials = qr_field,
-                                                     roll_no=roll_no)
+                                                     roll_no=roll_no,
+                                                     drive_link=drive_link)
             else:
                 certificate_saved = save_certificate(candidate_name=name,
                                                      certificate_id=unique_identifier,
@@ -103,7 +104,8 @@ def run_script(data, template_data):
                                                      course_id=course_id,
                                                      is_created=False,
                                                      credentials = None,
-                                                     roll_no=roll_no)
+                                                     roll_no=roll_no,
+                                                     drive_link=drive_link)
                 
                 failed_certificate = save_failed_certificate(certificate_request= certificate_request,
                                                         certificate=certificate_saved)

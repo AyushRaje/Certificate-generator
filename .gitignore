@@ -5,3 +5,4 @@ certificate_app/__pycache__
 .env
 *.sqlite3
 demo_outputs/*
+credentials.json

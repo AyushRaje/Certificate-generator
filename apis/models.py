@@ -17,7 +17,7 @@ class CertificateRequest(models.Model):
 
     email = models.EmailField(null=True, blank=True)
 
-    createdAt = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     status = models.CharField(max_length=100, choices=STATUS_CHOICES)
 
@@ -42,6 +42,8 @@ class Certificate(models.Model):
     certificate_request_id = models.ForeignKey(CertificateRequest,on_delete=models.CASCADE)
 
     credentials = models.URLField(max_length=300, unique=True, null=True, blank=True)
+
+    drive_link = models.URLField(max_length=500,null=True,blank=True, unique=True)
 
     is_created = models.BooleanField(default=False)
 
