@@ -6,3 +6,4 @@ certificate_app/__pycache__
 *.sqlite3
 demo_outputs/*
 credentials.json
+token.pickle
