@@ -7,3 +7,4 @@ certificate_app/__pycache__
 demo_outputs/*
 credentials.json
 token.pickle
+*.pickle
