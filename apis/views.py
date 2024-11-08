@@ -1,41 +1,34 @@
 from django.shortcuts import render
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, parser_classes
 from rest_framework.response import Response
 from rest_framework import status
 import pandas as pd
 import json
 from utils.create_certificates import run_script
 import subprocess
+from rest_framework.parsers import MultiPartParser, FormParser
 from threading import Thread
 import ast
 from database.queries import get_certificate_from_certificate_id, get_all_certificate_requests, get_certificate_requests_from_email
+from io import StringIO
 # Create your views here.
 
 def index(request):
     return render(request,'index.html')
 
 @api_view(['POST'])
+@parser_classes([MultiPartParser, FormParser])
 def handle_upload(request):
-    if 'file' not in request.FILES or 'dictionary' not in request.data:
-        return Response({'error': 'File and dictionary are required.'}, status=status.HTTP_400_BAD_REQUEST)
 
-    file = request.FILES['file']
-    file_name = file.name.lower()
     try:
-        if file_name.endswith('.csv'):
-            df = pd.read_csv(file)
-        elif file_name.endswith(('.xls', '.xlsx')):
-            df = pd.read_excel(file)
-        else:
-            return Response({'error': 'Invalid file format. Only CSV or Excel files are allowed.'}, status=status.HTTP_400_BAD_REQUEST)
+        if request.method == 'POST':
+            
+            file = request.FILES['file']
+            dictionary = request.POST['dictionary']
     except Exception as e:
-        return Response({'error': f'Failed to read the file: {str(e)}'}, status=status.HTTP_400_BAD_REQUEST)
-    try:
-        dictionary = json.loads(request.data['dictionary'])
-    except json.JSONDecodeError:
-        return Response({'error': 'Invalid dictionary format. Please provide a valid JSON object.'}, status=status.HTTP_400_BAD_REQUEST)
-    
-    
+        return Response("Error: "+str(e),status=status.HTTP_200_OK)        
+
+    df = pd.read_excel(file)
     thread = Thread(target=run_script, args=(df,dictionary))
     thread.start()
     email = ast.literal_eval(dictionary).get('email')
@@ -57,7 +50,7 @@ def verify_certificate(request, certificate_id):
         response_status = status.HTTP_404_NOT_FOUND
     else:
         message=f"Certificate found and is valid."
-        data = certificate.values('candidate_name','roll_no','course_name','course_id')
+        data = certificate.values('candidate_name','created_at','course_name','course_id','drive_link')
         response_status = status.HTTP_202_ACCEPTED
 
     return Response({
@@ -86,7 +79,7 @@ def get_request_status(request):
         'message': message,
         'data':data,
 
-    },status=response_status)        
+    },status=response_status)         
 
 
 

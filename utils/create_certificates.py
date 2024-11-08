@@ -30,17 +30,17 @@ def run_script(data, template_data):
 
         creation_status = False
         name = student['NAME']
-        father_name = student['FATHER_NAME']
+        father_name = student['FATHER NAME']
         gender = student['GENDER']
         course =  student['COURSE']
-        course_id = student['COURSE_ID']
+        course_id = student['COURSE ID']
         center = student['CENTER']
         scheme = student['SCHEME']
-        roll_no = student['ROLL_NO']
+        roll_no = student['ROLL NO']
 
         
 
-        unique_identifier =  student['COURSE_ID'] + roll_no
+        unique_identifier =  student['COURSE ID'] + roll_no
 
         qr_field = config('QR_BASE_URL') + unique_identifier
 
